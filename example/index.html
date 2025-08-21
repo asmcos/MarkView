@@ -1,9 +1,12 @@
+ 
+
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh">
 <head>
-<meta charset="UTF-8">
-<title>MarkView Demo</title>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vitepress@1.6.4/dist/client/theme-default/styles/base.css">
+  <meta charset="UTF-8">
+  <title>MarkView Demo</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vitepress@1.6.4/dist/client/theme-default/styles/base.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vitepress@1.6.4/dist/client/theme-default/styles/vars.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vitepress@1.6.4/dist/client/theme-default/styles/base.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vitepress@1.6.4/dist/client/theme-default/styles/fonts.css">
@@ -14,12 +17,54 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vitepress@1.6.4/dist/client/theme-default/styles/components/vp-doc.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vitepress@1.6.4/dist/client/theme-default/styles/components/vp-table.css">
 
+<style>
+ 
+  .container {
+    display: flex;
+    height: 100vh;
+  }
+
+  /* 编辑区 40% */
+  #editor {
+    width: 40%;
+    padding: 1rem;
+    border: 1px solid #4F46E5;  /* 大边框 */
+    border-radius: 12px;
+    margin: 1rem;
+    box-sizing: border-box;
+    font-family: monospace;
+    font-size: 16px;
+    resize: none;
+    overflow: auto;
+    background-color: #f9f9ff;
+  }
+
+  /* 分隔条 */
+  .divider {
+    width: 4px;
+    background-color: #d1d5db;
+  }
+
+  /* 预览区 60% */
+  #preview {
+    width: 60%;
+    padding: 1rem;
+    margin: 1rem;
+    box-sizing: border-box;
+    border-radius: 12px;
+    background-color: #ffffff;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    overflow: auto;
+  }
+</style>
 </head>
 <body>
-<div style="display:flex;gap:20px;height:100vh;">
-  <textarea id="editor" style="width:50%;padding:1rem;font-size:14px;"></textarea>
-  <div id="preview" class="vp-doc" style="width:50%;overflow:auto;padding:1rem;"></div>
-</div>
-<script type="module" src="./main.js"></script>
+  <script type="module" src="./main.js"></script>
+  <div class="container">
+    <textarea id="editor" placeholder="在这里输入 Markdown..."></textarea>
+    <div class="divider"></div>
+    <div id="preview" class="vp-doc" style="width:50%;overflow:auto;padding:1rem;" ></div>
+  </div>
+ 
 </body>
 </html>

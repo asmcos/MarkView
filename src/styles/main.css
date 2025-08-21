@@ -5,7 +5,18 @@ body {
   font-size:14px;
   line-height:1.6;
 }
-.custom-block.tip { background-color:#eef6ff; border-left:4px solid #409eff; padding:0.5em 1em; margin:1em 0; }
+.custom-block.note {
+  border-left: 4px solid #3b82f6; /* 蓝色 */
+  background: #eff6ff;
+  color: #1e40af;
+}
+
+.custom-block.tip {
+  border-left: 4px solid #22c55e; /* 绿色 */
+  background: #f0fdf4;
+  color: #166534;
+}
+
 .custom-block.warning { background-color:#fff5f5; border-left:4px solid #f56c6c; padding:0.5em 1em; margin:1em 0; }
 .custom-block.important { background-color:#fffbe6; border-left:4px solid #e6a23c; padding:0.5em 1em; margin:1em 0; }
 .custom-block.caution { background-color:#fdf6ec; border-left:4px solid #e6a23c; padding:0.5em 1em; margin:1em 0; }
