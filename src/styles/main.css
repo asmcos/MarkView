@@ -1,0 +1,12 @@
+body {
+  margin:0; font-family:system-ui,sans-serif;
+}
+.vp-doc {
+  font-size:14px;
+  line-height:1.6;
+}
+.custom-block.tip { background-color:#eef6ff; border-left:4px solid #409eff; padding:0.5em 1em; margin:1em 0; }
+.custom-block.warning { background-color:#fff5f5; border-left:4px solid #f56c6c; padding:0.5em 1em; margin:1em 0; }
+.custom-block.important { background-color:#fffbe6; border-left:4px solid #e6a23c; padding:0.5em 1em; margin:1em 0; }
+.custom-block.caution { background-color:#fdf6ec; border-left:4px solid #e6a23c; padding:0.5em 1em; margin:1em 0; }
+.custom-block p { margin:0; }

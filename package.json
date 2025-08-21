@@ -1,0 +1,21 @@
+{
+  "name": "markview",
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "serve": "vite preview"
+  },
+  "dependencies": {
+    "markdown-it": "^14.0.0",
+    "markdown-it-container": "^3.0.0",
+    "markdown-it-task-lists": "^2.1.1",
+    "markdown-it-anchor": "^8.6.6",
+    "markdown-it-attrs": "^4.1.4",
+    "shiki": "^1.22.0"
+  },
+  "devDependencies": {
+    "vite": "^4.4.9"
+  }
+}
