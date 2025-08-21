@@ -1,4 +1,5 @@
 import { initMarkdownEditor } from '../src/utils/markdown.js';
+import '../src/styles/main.css';
 
 initMarkdownEditor({
   editorId: 'editor',
