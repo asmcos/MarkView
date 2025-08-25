@@ -28,8 +28,7 @@ body {
   font-size:14px;
   line-height:1.5;
   margin:1em 0;
-  box-shadow:0 2px 6px rgba(0,0,0,0.05) !important;
-  background-color:#f5f5f5 !important;
+ 
   color:#1e1e2e !important;
 }
 @media (prefers-color-scheme: dark){
@@ -40,7 +39,7 @@ body {
 }
 .vp-doc pre.shiki code{ counter-reset:line; }
 .vp-doc pre.shiki .line{
-  display:block; min-height:1.25rem; counter-increment:line; padding-left:0.5em;
+   min-height:1.25rem; counter-increment:line; padding-left:0.5em;
 }
 .vp-doc pre.shiki.has-line-numbers .line::before{
   content:counter(line); display:inline-block; width:2.5em; margin-right:1em; text-align:right; opacity:.5; user-select:none;
@@ -50,4 +49,68 @@ body {
   margin:0 calc(-1rem); padding:0 1rem;
 }
 
+.code-wrapper {
+  position: relative;
+}
+
  
+
+.code-block {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+  overflow: hidden;
+ 
+  }
+  
+  
+  /* 顶部栏 */
+  .code-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  background: #f5f5f5;
+  }
+  
+  
+  .code-header-left {
+  display: flex;
+  align-items: center;
+  }
+  
+  
+  
+.code-header .dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  margin-right: 6px;
+  display: inline-block;
+}
+
+.code-header .red {
+  background: #ff5f56;
+}
+
+.code-header .yellow {
+  background: #ffbd2e;
+}
+
+.code-header .green {
+  background: #27c93f;
+}
+
+.copy-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 12px;
+  color: var(--cb-text);
+  padding: 4px 8px;
+  border-radius: 6px;
+}
+
+.copy-btn:hover {
+  background: rgba(0, 0, 0, .06);
+}

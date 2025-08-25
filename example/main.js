@@ -7,8 +7,10 @@ const renderMarkdown = await createMarkdownRenderer("auto");
 const editor = document.getElementById("editor");
 const preview = document.getElementById("preview");
 
+ 
 function update() {
   preview.innerHTML = renderMarkdown(editor.value);
+   
 }
 
 editor.addEventListener("input", update);
@@ -17,6 +19,7 @@ editor.addEventListener("input", update);
 editor.value = `# MarkView Demo
 
 [!NOTE] 这是 NOTE
+
 [!TIP] 这是 TIP
 
 :::tip
