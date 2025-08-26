@@ -115,3 +115,62 @@ body {
 .copy-btn:hover {
   background: rgba(0, 0, 0, .06);
 }
+
+
+ 
+
+.vp-doc a {
+  /* 新的链接颜色（替换为你需要的颜色） */
+  color: #6366f1; /* 示例：靛蓝色 */
+  
+  /* 其他样式修改（可选） */
+  font-weight: 600; /* 加粗 */
+  text-decoration: none; /* 移除下划线 */
+  border-bottom: 1px dashed currentColor; /* 改为虚线下划线 */
+  text-underline-offset: 0; /* 取消默认下划线偏移 */
+  
+  /* 保持过渡动画，仅修改颜色相关 */
+  transition: color 0.25s, border-color 0.25s, opacity 0.25s;
+}
+
+/*  hover 状态样式（鼠标悬停时） */
+.vp-doc a:hover {
+  color: #4f46e5; /* 更深的靛蓝色 */
+  border-color: #4f46e5; /* 下划线颜色同步变化 */
+}
+
+/* 已访问链接样式（可选） */
+.vp-doc a:visited {
+  color: #8b5cf6; /* 紫色调，区分已访问链接 */
+}
+
+.vp-doc a.header-anchor {
+  opacity: 0 !important; /* 始终隐藏 */
+   
+}
+.vp-doc h1,
+.vp-doc h2,
+.vp-doc h3,
+.vp-doc h4,
+.vp-doc h5,
+.vp-doc h6 {
+  position: relative; /* 为伪元素提供定位基准 */
+  display: inline-block; /* 确保下划线宽度与标题文本一致 */
+}
+
+.vp-doc h1:hover::after,
+.vp-doc h2:hover::after,
+.vp-doc h3:hover::after,
+.vp-doc h4:hover::after,
+.vp-doc h5:hover::after,
+.vp-doc h6:hover::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -2px; /* 控制下划线与文字的距离 */
+  width: 100%;
+  height: 2px; /* 下划线粗细 */
+  /* 渐变色：从蓝色到紫色（可自定义） */
+  background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+  border-radius: 1px; /* 轻微圆角，让边缘更柔和 */
+}

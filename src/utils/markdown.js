@@ -5,6 +5,10 @@ import mkAnchor from "https://esm.sh/markdown-it-anchor";
 import mkAttrs from "https://esm.sh/markdown-it-attrs";
 import { getHighlighter } from "https://esm.sh/shiki@1.22.0";
 import { CustomContainers } from "./CustomContainers";
+import "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js";
+ 
+// 引入 markdown-it 的 MathJax 插件（解析公式语法）
+import mathjax3 from 'markdown-it-mathjax3';
 
 
 
@@ -53,6 +57,33 @@ function copyCode(btn) {
 
 window.copyCode = copyCode;
 
+const mathjaxOptions =  {
+  tex: {
+    inlineMath: [['$', '$'], ['\\(', '\\)']],
+    displayMath: [['$$', '$$'], ['\\[', '\\]']],
+    processEscapes: true
+  },
+  svg: {  // 尝试使用 SVG 输出（替代 chtml，有时能解决处理器问题）
+    fontCache: 'global'
+  },
+  startup: {
+    pageReady: function() {
+      // 确保初始化完成后再执行渲染
+      return MathJax.startup.defaultPageReady().then(function() {
+        // 注册文档处理器（关键修复）
+        const handler = MathJax.startup.document.handler;
+        if (!handler) {
+          MathJax.startup.document.setHandler(MathJax.handlers.html);
+        }
+      });
+    }
+  }
+};
+// 配置 MathJax 选项（可选：自定义公式渲染样式）
+window.MathJax = mathjaxOptions;
+
+
+
 function markdownCustomBlock(md) {
   const map = {
     NOTE: "note",
@@ -99,13 +130,6 @@ function markdownCustomBlock(md) {
   });
 }
 
-const transformers = [{
-  // 处理 code 节点
-  code(node) {
-      // 添加 language- 类名
-      node.properties.className = [`language-${lang}`];
-  }
-}];
 
 export async function createMarkdownRenderer(theme = "auto") {
   const prefersDark = window.matchMedia("(prefers-color-scheme: dark)");
@@ -124,10 +148,15 @@ export async function createMarkdownRenderer(theme = "auto") {
     linkify: true,
     typographer: true,
     highlight: (str, lang, langAttrs) => {
-      const { highlight: highlightLines, lineNumbers } = parseMeta(langAttrs);
+
       let prehtml;
-      const targetLang = lang || "text"; // 统一变量名（避免拼写错误 targetlang → targetLang）
-    
+       
+      const targetLang = (lang || "text")
+        .split(':')[0]  
+        .trim();  
+      const metaInfo = lang.includes(':') ? (lang.split(':')[1]?.trim() || '') : '';
+      const { highlight: highlightLines, lineNumbers } = parseMeta(langAttrs || metaInfo);
+
       try {
         prehtml = highlighter.codeToHtml(str, {
           lang: targetLang,
@@ -137,12 +166,17 @@ export async function createMarkdownRenderer(theme = "auto") {
             wrap: true, // 强制每行代码用 <span class="line"> 包裹（不影响样式，仅为触发配置）
             lineNumbers: lineNumbers ? "inline" : undefined, // 可选：根据 parseMeta 结果显示行号
           },
-          transformers:transformers
+          transformers:[{
+            // 处理 code 节点
+            code(node) {
+                // 添加 language- 类名
+                node.properties.className = [`language-${lang}`];
+            }
+          }]
  
         });
       } catch (err) {
-        console.error("shiki 高亮失败:", err);
-        // 异常场景：修复 lang 可能为 undefined 的问题，用 targetLang 兜底
+        console.log(err)
         prehtml = `<pre class="shiki vitesse-light"><code class="language-${targetLang}">${md.utils.escapeHtml(str)}</code></pre>`;
       }
     
@@ -166,6 +200,13 @@ export async function createMarkdownRenderer(theme = "auto") {
     .use(mkAttrs)
     .use(mkAnchor, {
       permalink: mkAnchor.permalink.ariaHidden({}),
+      permalinkBefore: false,     // 锚点放在标题后面（避免与标题前缀冲突）
+      permalinkSpace: true,       // 锚点与标题之间留空格
+      permalinkSymbol: '',        // 清空默认符号（避免重复）
+    })
+    .use(mathjax3, {
+      tex: mathjaxOptions.tex,
+      chtml: mathjaxOptions.chtml
     })
     .use(markdownCustomBlock)
     .use(CustomContainers);
@@ -193,5 +234,6 @@ export async function createMarkdownRenderer(theme = "auto") {
   };
 
   // 返回一个函数，直接用于渲染 markdown
+  
   return (src) => md.render(src);
 }
