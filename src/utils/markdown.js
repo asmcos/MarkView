@@ -12,10 +12,6 @@ import mathjax3 from 'markdown-it-mathjax3';
 
 
 
-const highlighter = await getHighlighter({
-  themes: ["vitesse-dark", "vitesse-light"],
-  langs: ["js", "ts", "bash", "json", "html", "css", "markdown", "yaml",'python','java','go','c','rust'],
-});
 
 function parseMeta(meta = "") {
   const res = { highlight: [], lineNumbers: false };
@@ -141,7 +137,11 @@ export async function createMarkdownRenderer(theme = "auto") {
         : "vitesse-light"
       : theme;
 
-
+  const highlighter = await getHighlighter({
+        themes: ["vitesse-dark", "vitesse-light"],
+        langs: ["js", "ts", "bash", "json", "html", "css", "markdown", "yaml",'python','java','go','c','rust'],
+  });
+      
 
   const md = new MarkdownIt({
     html: true,
@@ -161,7 +161,7 @@ export async function createMarkdownRenderer(theme = "auto") {
         const id = `mermaid-${Date.now()}-${Math.random().toString(36).substr(2, 5)}`;
         return `<div id="${id}" class="mermaid">${code}</div>`; // 先插入代码
       }
-      
+
       try {
         prehtml = highlighter.codeToHtml(str, {
           lang: targetLang,

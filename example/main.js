@@ -8,8 +8,8 @@ const editor = document.getElementById("editor");
 const preview = document.getElementById("preview");
 
  
-function update() {
-  preview.innerHTML = renderMarkdown(editor.value);
+async function  update() {
+  preview.innerHTML = await renderMarkdown(editor.value);
    
 }
 
