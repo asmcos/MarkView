@@ -8,12 +8,13 @@
     "serve": "vite preview"
   },
   "dependencies": {
-    "markdown-it": "^14.0.0",
-    "markdown-it-anchor": "^8.6.6",
-    "markdown-it-attrs": "^4.1.4",
+    "markdown-it": "^14.1.0",
+    "markdown-it-anchor": "^8.6.7",
+    "markdown-it-attrs": "^4.3.1",
     "markdown-it-container": "^3.0.0",
     "markdown-it-mathjax3": "^4.3.2",
     "markdown-it-task-lists": "^2.1.1",
+    "mathjax": "^3.2.2",
     "shiki": "^1.22.0"
   },
   "devDependencies": {

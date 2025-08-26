@@ -1,11 +1,12 @@
-import MarkdownIt from "https://esm.sh/markdown-it@14";
-import mkContainer from "https://esm.sh/markdown-it-container";
-import mkTask from "https://esm.sh/markdown-it-task-lists";
-import mkAnchor from "https://esm.sh/markdown-it-anchor";
-import mkAttrs from "https://esm.sh/markdown-it-attrs";
-import { getHighlighter } from "https://esm.sh/shiki@1.22.0";
-import { CustomContainers } from "./CustomContainers";
-import "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js";
+import MarkdownIt from 'markdown-it';
+import mkContainer from 'markdown-it-container';
+import mkTask from 'markdown-it-task-lists';
+import mkAnchor from 'markdown-it-anchor';
+import mkAttrs from 'markdown-it-attrs';
+import { createHighlighter } from 'shiki';
+import { CustomContainers } from './CustomContainers'; // 保持本地相对路径引用
+// 导入本地安装的 MathJax
+import 'mathjax/es5/tex-mml-chtml.js';
  
 // 引入 markdown-it 的 MathJax 插件（解析公式语法）
 import mathjax3 from 'markdown-it-mathjax3';
@@ -137,7 +138,7 @@ export async function createMarkdownRenderer(theme = "auto") {
         : "vitesse-light"
       : theme;
 
-  const highlighter = await getHighlighter({
+  const highlighter = await createHighlighter({
         themes: ["vitesse-dark", "vitesse-light"],
         langs: ["js", "ts", "bash", "json", "html", "css", "markdown", "yaml",'python','java','go','c','rust'],
   });
