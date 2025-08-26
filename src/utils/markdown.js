@@ -10,7 +10,7 @@ import { CustomContainers } from "./CustomContainers";
 
 const highlighter = await getHighlighter({
   themes: ["vitesse-dark", "vitesse-light"],
-  langs: ["js", "ts", "bash", "json", "html", "css", "markdown", "yaml"],
+  langs: ["js", "ts", "bash", "json", "html", "css", "markdown", "yaml",'python','java','go','c','rust'],
 });
 
 function parseMeta(meta = "") {
@@ -44,7 +44,7 @@ function copyCode(btn) {
       btn.textContent = "已复制!";
       setTimeout(() => {
           btn.textContent = orig;
-      }, 1600);
+      }, 1000);
   }).catch(err => {
       console.error('复制失败:', err);
       alert('复制失败，请手动复制代码');
@@ -99,6 +99,14 @@ function markdownCustomBlock(md) {
   });
 }
 
+const transformers = [{
+  // 处理 code 节点
+  code(node) {
+      // 添加 language- 类名
+      node.properties.className = [`language-${lang}`];
+  }
+}];
+
 export async function createMarkdownRenderer(theme = "auto") {
   const prefersDark = window.matchMedia("(prefers-color-scheme: dark)");
 
@@ -115,29 +123,38 @@ export async function createMarkdownRenderer(theme = "auto") {
     html: true,
     linkify: true,
     typographer: true,
-    highlight: (str, lang,langAttrs) => {
- 
-    
-      const { highlight, lineNumbers } = parseMeta(langAttrs);
+    highlight: (str, lang, langAttrs) => {
+      const { highlight: highlightLines, lineNumbers } = parseMeta(langAttrs);
       let prehtml;
+      const targetLang = lang || "text"; // 统一变量名（避免拼写错误 targetlang → targetLang）
+    
       try {
-      prehtml =  highlighter.codeToHtml(str, {
-          lang: lang || "text",
+        prehtml = highlighter.codeToHtml(str, {
+          lang: targetLang,
           theme: getTheme(),
+          // 关键：开启 lineOptions，触发 shiki 完整渲染流程，让 meta.code.class 生效
+          lineOptions: {
+            wrap: true, // 强制每行代码用 <span class="line"> 包裹（不影响样式，仅为触发配置）
+            lineNumbers: lineNumbers ? "inline" : undefined, // 可选：根据 parseMeta 结果显示行号
+          },
+          transformers:transformers
+ 
         });
-      } catch {
-        prehtml =  `<pre><code>${md.utils.escapeHtml(str)}</code></pre>`;
+      } catch (err) {
+        console.error("shiki 高亮失败:", err);
+        // 异常场景：修复 lang 可能为 undefined 的问题，用 targetLang 兜底
+        prehtml = `<pre class="shiki vitesse-light"><code class="language-${targetLang}">${md.utils.escapeHtml(str)}</code></pre>`;
       }
-   
     
       return `
         <div class="code-block">
-          <div class="code-header">
+          <div class="code-header">         
             <div class="code-header-left">
               <span class="dot red"></span>
               <span class="dot yellow"></span>
               <span class="dot green"></span>
             </div>
+            <span>${lang}</span>
             <button class="copy-btn" onclick="copyCode(this)">复制</button>
           </div>
           ${prehtml}
