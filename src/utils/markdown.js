@@ -157,6 +157,11 @@ export async function createMarkdownRenderer(theme = "auto") {
       const metaInfo = lang.includes(':') ? (lang.split(':')[1]?.trim() || '') : '';
       const { highlight: highlightLines, lineNumbers } = parseMeta(langAttrs || metaInfo);
 
+      if (lang === 'mermaid') {
+        const id = `mermaid-${Date.now()}-${Math.random().toString(36).substr(2, 5)}`;
+        return `<div id="${id}" class="mermaid">${code}</div>`; // 先插入代码
+      }
+      
       try {
         prehtml = highlighter.codeToHtml(str, {
           lang: targetLang,
