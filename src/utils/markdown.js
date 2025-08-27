@@ -160,7 +160,7 @@ export async function createMarkdownRenderer(theme = "auto") {
 
       if (lang === 'mermaid') {
         const id = `mermaid-${Date.now()}-${Math.random().toString(36).substr(2, 5)}`;
-        return `<div id="${id}" class="mermaid">${code}</div>`; // 先插入代码
+        return `<div id="${id}" class="mermaid">${str}</div>`; // 先插入代码
       }
 
       try {
