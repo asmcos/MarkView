@@ -155,7 +155,6 @@ body {
 .vp-doc h5,
 .vp-doc h6 {
   position: relative; /* 为伪元素提供定位基准 */
-  display: inline-block; /* 确保下划线宽度与标题文本一致 */
 }
 
 .vp-doc h1:hover::after,
